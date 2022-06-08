@@ -18,8 +18,8 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderColor: "black",
 
+    fontFamily: "open-sans-bold",
     fontSize: 24,
-    fontWeight: "bold",
     color: "black",
   },
 });

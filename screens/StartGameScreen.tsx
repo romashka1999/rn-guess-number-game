@@ -17,8 +17,8 @@ const StartGameScreen: React.FC<Props> = ({ onStartGame }) => {
 
   const confirmHandler = () => {
     const chosenNumber = parseInt(enteredNumber);
-    if (isNaN(chosenNumber) || chosenNumber <= 0 || chosenNumber > 99) {
-      Alert.alert("Invalid number!", "Number has to be between 1 and 99", [
+    if (isNaN(chosenNumber) || chosenNumber <= 2 || chosenNumber > 99) {
+      Alert.alert("Invalid number!", "Number has to be between 2 and 99", [
         {
           text: "Okay",
           style: "destructive",

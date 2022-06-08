@@ -1,5 +1,6 @@
-import { Alert, StyleSheet, Text, View } from "react-native";
+import { Alert, FlatList, StyleSheet, Text, View } from "react-native";
 import React, { useState, useEffect } from "react";
+import { Ionicons } from "@expo/vector-icons";
 
 import CustomButton from "../components/CustomButton";
 import Title from "../components/Title";
@@ -35,6 +36,7 @@ const GameScreen: React.FC<Props> = ({
 }) => {
   const initialGuess = generateRandomBetween(1, 100, userChoice);
   const [currentGuess, setCurrentGuess] = useState(initialGuess);
+  const [guesses, setGuesses] = useState([initialGuess]);
 
   useEffect(() => {
     if (userChoice === currentGuess) {
@@ -57,13 +59,14 @@ const GameScreen: React.FC<Props> = ({
 
     if (direction === "lower") {
       maxBoundary = currentGuess;
-      newRand = generateRandomBetween(minBoundary, currentGuess, currentGuess);
+      newRand = generateRandomBetween(minBoundary, maxBoundary, currentGuess);
     } else {
       minBoundary = currentGuess + 1;
       newRand = generateRandomBetween(minBoundary, maxBoundary, currentGuess);
     }
 
     setCurrentGuess(newRand);
+    setGuesses((prev) => [newRand, ...prev]);
   };
 
   return (
@@ -75,17 +78,34 @@ const GameScreen: React.FC<Props> = ({
         <View style={styles.buttons}>
           <View style={styles.button}>
             <CustomButton onPress={nextGuessHandler.bind(this, "lower")}>
-              -
+              <Ionicons name="md-remove" size={24} />
             </CustomButton>
           </View>
           <View style={styles.button}>
             <CustomButton onPress={nextGuessHandler.bind(this, "greater")}>
-              +
+              <Ionicons name="md-add" size={24} />
             </CustomButton>
           </View>
         </View>
       </View>
-      {/* <View></View> */}
+      <FlatList
+        data={guesses}
+        renderItem={(itemData) => (
+          <View style={styles.listItem}>
+            <Text
+              style={{
+                textAlign: "center",
+                color: "white",
+                fontFamily: "open-sans-bold",
+                fontSize: 18,
+              }}
+            >
+              {itemData.item}
+            </Text>
+          </View>
+        )}
+        keyExtractor={(item) => item.toString()}
+      />
     </View>
   );
 };
@@ -109,9 +129,19 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   buttons: {
+    marginVertical: 18,
+
     flexDirection: "row",
   },
   button: {
     flex: 1,
+  },
+  listItem: {
+    borderColor: "white",
+    borderWidth: 2,
+    borderRadius: 40,
+    padding: 12,
+    marginVertical: 8,
+    backgroundColor: "green",
   },
 });

@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   text: {
+    fontFamily: "open-sans-bold",
     color: "yellow",
     fontSize: 36,
     fontWeight: "bold",
